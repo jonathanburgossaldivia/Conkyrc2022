@@ -60,18 +60,14 @@ ${endif}${color3}${hr}
 ${font2}${color2} ${font1}${color1}Devices connectivity check
 ${if_gw}
 NAME${alignr}STATUS${color3}
-Central telefonica${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.80.0.30}
-Laboratorio comp${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.1.41}
-Sala TOEIC${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.1.68}
-Sonia Suvanic${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.1.168}
-Sala negocios2${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.1.64}
-Segundo piso${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.1.44}
+Example 2${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.80.1.40}
+Example 1${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.10.45}
 ${else}
 ${font2}${color3} ${font1}${color1}Not available without a network connection
 ${endif}${color3}${hr}
 ${font2}${color2} ${font1}${color1}Last unread email${alignr}Gmail${color3}
 ${if_gw}
-${font1}${texeci 5 curl -s -L -u jonathan.burgos@umag.cl:17238311 https://mail.google.com/gmail/feed/atom | sed -e 's/</\n</g' | grep -E "title|summary" | sed -e '/<\/summary>/,$d' | sed 's/<[^0-9]*>//g' | sed -e "s/.\{44\}/&\n/g"| sed 's/^[ \t]*//'}
+${font1}${texeci 5 curl -s -L -u youruseremail@gmail.com:password https://mail.google.com/gmail/feed/atom | sed -e 's/</\n</g' | grep -E "title|summary" | sed -e '/<\/summary>/,$d' | sed 's/<[^0-9]*>//g' | sed -e "s/.\{44\}/&\n/g"| sed 's/^[ \t]*//'}
 ${else}
 ${font2}${color3} ${font1}${color1}Not available without a network connection
 ${endif}${color3}${hr}
