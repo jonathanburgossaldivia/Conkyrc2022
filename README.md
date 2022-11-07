@@ -10,7 +10,7 @@ Required packages:
 - ttf-ibm-plex
 - speedtest-cli
 
-To see the last unread email from gmail you need to enable access to less secure apps from gmail. To display the icons you will need to have the ttf-font-awesome icon pack installed.
+To see the last unread email from gmail you need to enable access to less secure apps from gmail. To display the icons you will need to have the ttf-font-awesome font package installed.
 
 
 ### Things you need to change in Conky's config file:
