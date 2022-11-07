@@ -4,13 +4,13 @@
 
 Example Conky configuration file with weather, CPU and memory information, network traffic and IP addresses, network device monitoring via ip address, last unread email.
 
-required packages:
+Required packages:
 
 - ttf-font-awesome
 - ttf-ibm-plex
 - speedtest-cli
 
-To see the last unread email from gmail you need to enable access to less secure apps from gmail.
+To see the last unread email from gmail you need to enable access to less secure apps from gmail. To display the icons you will need to have the ttf-font-awesome icon pack installed.
 
 
 ### Things you need to change in Conky's config file:
