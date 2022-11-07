@@ -17,8 +17,12 @@ To see the last unread email from gmail you need to enable access to less secure
 
 
 Left Conky window:
-- network devices, look at yours with this command: 
+- cpu model name, look at yours with this command:
+```
+lscpu | grep "Model name" |perl -pe 's/:\s+//;s/Model name//g'
+```
 
+- network devices, look at yours with this command: 
 ```
 nmcli device status
 ```
