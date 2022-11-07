@@ -1,0 +1,93 @@
+--[[
+    http://conky.sourceforge.net/docs.html
+    http://conky.sourceforge.net/variables.html
+    https://linuxconfig.org/ubuntu-20-04-system-monitoring-with-conky-widgets
+    https://github.com/brndnmtthws/conky/wiki
+    https://cairographics.org/manual/
+]]
+conky.config={
+    alignment='top_left',
+    background=false,
+    color1='e9eaec',
+    color2='fad02c',
+    color3='90adc6',
+    color4='0b3c7f',
+    cpu_avg_samples=4,
+    default_color='FFFFFF',
+    default_outline_color='black',
+    default_shade_color='333333',
+    double_buffer=true,
+    draw_borders=false,
+    draw_graph_borders=false,
+    draw_outline=false,
+    draw_shades=false,
+    font1='IBM Plex Mono:style=Regular:pixelsize=13',
+    font2='Font Awesome 5 Pro Solid:style=Solid:pixelsize=13',
+    gap_x=10,
+    gap_y=0,
+    --lua_load="$HOME/.config/conky/conky.lua",
+    --lua_draw_hook_post="conky_main",
+    maximum_width=400,
+    minimum_height=10,
+    minimum_width=300,
+    net_avg_samples=1,
+    no_buffers=true,
+    override_utf8_locale=true,
+    own_window_argb_value=0,
+    own_window_argb_visual=true,
+    own_window_colour='000000',
+    own_window_hints='undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent=true,
+    own_window_type='override',
+    own_window=true,
+    text_buffer_size=2048,
+    total_run_times=0,
+    update_interval=3,
+    uppercase=false,
+    use_xft=true,
+    xftalpha=.1,
+}
+
+conky.text=[[
+
+${color3}${hr}
+${font2}${color2} ${font1}${color1}System${alignr}${execi 60000 grep '^PRETTY' /etc/os-release | perl -pe 's/PRETTY_NAME=//'}
+
+${font2}${color2} ${font1}${color1}Intel Core i7-10510U CPU @ 1.80GHz${alignr}$cpu%
+${color4}${cpubar cpu0 10, 350}
+
+${font2}${color2} ${font1}${color1}Memory usage${alignr}${memperc}% ($mem of ${memmax})
+${color4}${membar 10,350}
+${color3}${hr}
+${font2}${color2} ${font1}${color1}Networking connectivity check${alignr}${execi 3 nmcli networking connectivity check}
+
+${font2}${color2} ${font1}${color1}External IP${alignr}${execi 3 curl ipinfo.io/ip}
+${font2}${color2} ${font1}${color1}Gateway${alignr} ${execi 3 ip route | awk '/default/{print $3}' | wc -l}
+${color3}${execi 3 ip route | awk '/default/{print $3, $5}'}
+
+${color1}${font1}Active connection(s)${alignr}${execi 3 ip -4 --brief address show | grep "\sUP" | wc -l} active
+${color3}${execi 3 ip -4 --brief address show | grep "\sUP" | perl -pe 's/\s+UP\s+/ /' | awk -F' ' '{print $2,$1}'}
+${color3}${hr}${color1}
+${font2}${color2} ${font1}${color1}Wired bandwidth monitor${alignr}enp1s0
+${if_gw}
+${font2}${color2} ${font1}${color1}Download${alignr}${downspeedf enp1s0}k/s (${totaldown enp1s0})
+${font2}${color2} ${font1}${color1}Upload${alignr}${upspeedf enp1s0}k/s (${totalup enp1s0})
+${else}
+${font2}${color3} ${font1}${color1}Not available without a network connection
+${endif}${color3}${hr}
+${font2}${color2} ${font1}${color1}Wireless bandwidth monitor${alignr}wlp0s20f3
+${if_gw}
+${font1}${color1}SSID:${wireless_essid wlp0s20f3}${alignr}Quality:${wireless_link_qual_perc wlp0s20f3}%
+${font2}${color2} ${font1}${color1}Download${alignr}${downspeedf wlp0s20f3}k/s (${totaldown wlp0s20f3})
+${font2}${color2} ${font1}${color1}Upload${alignr}${upspeedf wlp0s20f3}k/s (${totalup wlp0s20f3})
+${else}
+${font2}${color3} ${font1}${color1}Not available without a network connection
+${endif}${color3}${hr}
+${font2}${color2} ${font1}${color1}Speed test${color3}
+${if_gw}
+${texeci 300 speedtest --simple}
+${else}
+${font2}${color3} ${font1}${color1}Not available without a network connection
+${endif}
+${color3}${hr}
+]]
