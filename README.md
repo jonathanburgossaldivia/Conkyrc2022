@@ -6,6 +6,7 @@ Example Conky configuration file with weather, CPU and memory information, netwo
 
 Required packages:
 
+- Conky
 - ttf-font-awesome
 - ttf-ibm-plex
 - speedtest-cli
