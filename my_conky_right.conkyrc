@@ -8,10 +8,14 @@
 conky.config={
     alignment='top_right',
     background=false,
+    --color1='1f3541',
+    --color2='5289b5',
+    --color3='afd8f2',
+    --color4='edf2f3',
     color1='e9eaec',
     color2='fad02c',
-    color3='90adc6',
-    color4='0b3c7f',
+    color3='333652',
+    color4='90adc6',
     cpu_avg_samples=4,
     default_color='FFFFFF',
     default_outline_color='black',
@@ -21,23 +25,23 @@ conky.config={
     draw_graph_borders=false,
     draw_outline=false,
     draw_shades=false,
-    font1='IBM Plex Mono:style=Regular:pixelsize=13',
+    font1='Source Code Pro Semibold:style=Semibold:pixelsize=15',
     font2='Font Awesome 5 Pro Solid:style=Solid:pixelsize=13',
     gap_x=10,
     gap_y=0,
     --lua_load="$HOME/.config/conky/conky.lua",
     --lua_draw_hook_post="conky_main",
-    maximum_width=400,
+    maximum_width=410,
     minimum_height=10,
     minimum_width=300,
     net_avg_samples=1,
     no_buffers=true,
     override_utf8_locale=true,
-    own_window_argb_value=0,
-    own_window_argb_visual=true,
-    own_window_colour='000000',
+    --own_window_argb_value=0,
+    --own_window_argb_visual=true,
+    --own_window_colour='000000',
     own_window_hints='undecorated,below,sticky,skip_taskbar,skip_pager',
-    own_window_transparent=true,
+    --own_window_transparent=true,
     own_window_type='override',
     own_window=true,
     text_buffer_size=2048,
@@ -46,29 +50,26 @@ conky.config={
     uppercase=false,
     use_xft=true,
     xftalpha=.1,
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 150,
+    own_window_colour = 'black',
 }
 
 conky.text=[[
-
-${color3}${hr}
-${font2}${color2} ${font1}${color1}Weather
+${color3}${hr 2}
+${font1}${color1}Devices connectivity check
 ${if_gw}
-${color2}${execi 60 curl -H "Accept-Language: es" wttr.in/punta+arenas\?A\?0\?T\?Q}
+NAME${alignr}STATUS
+${color1}Central telefonica${alignr}${color2}${texeci 60 /usr/bin/bash $HOME/.config/i3/bin/server_check.sh 10.20.0.77}
+${color1}Alfresco${alignr}${color2}${texeci 60 /usr/bin/bash $HOME/.config/i3/bin//server_check.sh 10.500.0.99}
 ${else}
-${font2}${color3} ${font1}${color1}Not available without a network connection
-${endif}${color3}${hr}
-${font2}${color2} ${font1}${color1}Devices connectivity check
+${font1}${color1}Not available without a network connection
+${endif}${color3}${hr 2}
+${font1}${color1}Last unread email${alignr}Gmail
 ${if_gw}
-NAME${alignr}STATUS${color3}
-Example 2${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.80.1.40}
-Example 1${alignr}${texeci 60 /usr/bin/bash $HOME/.config/i3/server_check.sh 10.2.10.45}
+${color2}${font1}${texeci 5 curl -s -L -u youruseremail@gmail.com:password https://mail.google.com/gmail/feed/atom | sed -e 's/</\n</g' | grep -E "title|summary" | sed -e '/<\/summary>/,$d' | sed 's/<[^0-9]*>//g' | sed -e "s/.\{44\}/&\n/g"| sed 's/^[ \t]*//'}
 ${else}
-${font2}${color3} ${font1}${color1}Not available without a network connection
-${endif}${color3}${hr}
-${font2}${color2} ${font1}${color1}Last unread email${alignr}Gmail${color3}
-${if_gw}
-${font1}${texeci 5 curl -s -L -u youruseremail@gmail.com:password https://mail.google.com/gmail/feed/atom | sed -e 's/</\n</g' | grep -E "title|summary" | sed -e '/<\/summary>/,$d' | sed 's/<[^0-9]*>//g' | sed -e "s/.\{44\}/&\n/g"| sed 's/^[ \t]*//'}
-${else}
-${font2}${color3} ${font1}${color1}Not available without a network connection
-${endif}${color3}${hr}
+${font1}${color1}Not available without a network connection
+${endif}
 ]]
