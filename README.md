@@ -25,7 +25,9 @@ Left Conky window:
 nmcli device status
 ```
 
-Right Conky window:
+Middle Conky window:
 - wttr.in, the location where you want to know the weather information
+
+Right Conky window:
 - server_check.sh file location on your storage drive
 - Gmail user and password
