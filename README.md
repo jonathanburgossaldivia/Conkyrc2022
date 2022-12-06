@@ -7,9 +7,11 @@ Example Conky configuration file with weather, CPU and memory information, netwo
 Required packages:
 
 - Conky
-- ttf-font-awesome
-- ttf-ibm-plex
 - speedtest-cli
+
+Fonts required:
+
+- Source Code Pro
 
 To see the last unread email from gmail you need to enable access to less secure apps from gmail. To display the icons you will need to have the ttf-font-awesome font package installed.
 
