@@ -1,6 +1,6 @@
 # Conkyrc2022
 
-![alt text](https://github.com/jonathanburgossaldivia/Conkyrc2022/blob/main/conky_screenshot.png)
+![alt text](https://github.com/jonathanburgossaldivia/Conkyrc2022/blob/main/screenshot.png)
 
 Example Conky configuration file with weather, CPU and memory information, network traffic and IP addresses, network device monitoring via ip address, last unread email.
 
