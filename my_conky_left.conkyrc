@@ -8,10 +8,14 @@
 conky.config={
     alignment='top_left',
     background=false,
+    --color1='1f3541',
+    --color2='5289b5',
+    --color3='afd8f2',
+    --color4='edf2f3',
     color1='e9eaec',
     color2='fad02c',
-    color3='90adc6',
-    color4='0b3c7f',
+    color3='333652',
+    color4='90adc6',
     cpu_avg_samples=4,
     default_color='FFFFFF',
     default_outline_color='black',
@@ -21,23 +25,23 @@ conky.config={
     draw_graph_borders=false,
     draw_outline=false,
     draw_shades=false,
-    font1='IBM Plex Mono:style=Regular:pixelsize=13',
+    font1='Source Code Pro Semibold:style=Semibold:pixelsize=15',
     font2='Font Awesome 5 Pro Solid:style=Solid:pixelsize=13',
     gap_x=10,
     gap_y=0,
     --lua_load="$HOME/.config/conky/conky.lua",
     --lua_draw_hook_post="conky_main",
-    maximum_width=400,
+    maximum_width=410,
     minimum_height=10,
     minimum_width=300,
     net_avg_samples=1,
     no_buffers=true,
     override_utf8_locale=true,
-    own_window_argb_value=0,
-    own_window_argb_visual=true,
-    own_window_colour='000000',
+    --own_window_argb_value=0,
+    --own_window_argb_visual=true,
+    --own_window_colour='000000',
     own_window_hints='undecorated,below,sticky,skip_taskbar,skip_pager',
-    own_window_transparent=true,
+    --own_window_transparent=true,
     own_window_type='override',
     own_window=true,
     text_buffer_size=2048,
@@ -46,48 +50,51 @@ conky.config={
     uppercase=false,
     use_xft=true,
     xftalpha=.1,
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 150,
+    own_window_colour = 'black',
 }
 
 conky.text=[[
+${color3}${hr 2}
+${font1}${color1}System${alignr}${color2}${execi 60000 grep '^PRETTY' /etc/os-release | perl -pe 's/PRETTY_NAME=//'}
 
-${color3}${hr}
-${font2}${color2} ${font1}${color1}System${alignr}${execi 60000 grep '^PRETTY' /etc/os-release | perl -pe 's/PRETTY_NAME=//'}
-
-${font2}${color2} ${font1}${color1}Intel Core i7-10510U CPU @ 1.80GHz${alignr}$cpu%
-${color4}${cpubar cpu0 10, 350}
-
-${font2}${color2} ${font1}${color1}Memory usage${alignr}${memperc}% ($mem of ${memmax})
-${color4}${membar 10,350}
-${color3}${hr}
-${font2}${color2} ${font1}${color1}Networking connectivity check${alignr}${execi 3 nmcli networking connectivity check}
-
-${font2}${color2} ${font1}${color1}External IP${alignr}${execi 3 curl ipinfo.io/ip}
-${font2}${color2} ${font1}${color1}Gateway${alignr} ${execi 3 ip route | awk '/default/{print $3}' | wc -l}
-${color3}${execi 3 ip route | awk '/default/{print $3, $5}'}
+${font1}${color1}CPU usage${alignr}${color2}$cpu%
+${font1}${color1}Memory usage${alignr}($mem/${memmax}) ${color2}${memperc}%
+${color3}${hr 2}
+${font1}${color1}Networking information
+${if_gw}
+${font1}${color1}Networking connectivity${alignr}${color2}${execi 3 nmcli networking connectivity check}
+${font1}${color1}IP address assignment${alignr}${color2}${execi 3 ip -4 addr show ${enp1s0} | grep -q dynamic && echo dynamic || echo static}
+${font1}${color1}External IP${alignr}${color2}${execi 3 curl ipinfo.io/ip}
+${font1}${color1}Gateway${alignr} ${color2}${execi 3 ip route | awk '/default/{print $3}' | wc -l}
+${color2}${execi 3 ip route show default| awk '{ print $3, $5, $7, $8, $9 }' | perl -pe 's/\smetric.*$//g'}
 
 ${color1}${font1}Active connection(s)${alignr}${execi 3 ip -4 --brief address show | grep "\sUP" | wc -l} active
-${color3}${execi 3 ip -4 --brief address show | grep "\sUP" | perl -pe 's/\s+UP\s+/ /' | awk -F' ' '{print $2,$1}'}
-${color3}${hr}${color1}
-${font2}${color2} ${font1}${color1}Wired bandwidth monitor${alignr}enp1s0
-${if_gw}
-${font2}${color2} ${font1}${color1}Download${alignr}${downspeedf enp1s0}k/s (${totaldown enp1s0})
-${font2}${color2} ${font1}${color1}Upload${alignr}${upspeedf enp1s0}k/s (${totalup enp1s0})
+${color2}${execi 3 ip -4 --brief address show | grep "\sUP" | awk '{ print $1, $3}'}
 ${else}
-${font2}${color3} ${font1}${color1}Not available without a network connection
-${endif}${color3}${hr}
-${font2}${color2} ${font1}${color1}Wireless bandwidth monitor${alignr}wlp0s20f3
+${font1}${color1}Not available without a network connection
+${endif}${color3}${hr 2}
+${font1}${color1}Wired bandwidth monitor
 ${if_gw}
-${font1}${color1}SSID:${wireless_essid wlp0s20f3}${alignr}Quality:${wireless_link_qual_perc wlp0s20f3}%
-${font2}${color2} ${font1}${color1}Download${alignr}${downspeedf wlp0s20f3}k/s (${totaldown wlp0s20f3})
-${font2}${color2} ${font1}${color1}Upload${alignr}${upspeedf wlp0s20f3}k/s (${totalup wlp0s20f3})
+${font1}${color1}Download${alignr}${color2}${downspeedf enp1s0}k/s (${totaldown enp1s0})
+${font1}${color1}Upload${alignr}${color2}${upspeedf enp1s0}k/s (${totalup enp1s0})
 ${else}
-${font2}${color3} ${font1}${color1}Not available without a network connection
-${endif}${color3}${hr}
-${font2}${color2} ${font1}${color1}Speed test${color3}
+${font1}${color1}Not available without a network connection
+${endif}${color3}${hr 2}
+${font1}${color1}Wireless bandwidth monitor
 ${if_gw}
-${texeci 300 speedtest --simple}
+${font1}${color1}SSID:${wireless_essid wlan0}${alignr}Quality:${wireless_link_qual_perc wlan0}%
+${font1}${color1}Download${alignr}${color2}${downspeedf wlan0}k/s (${totaldown wlan0})
+${font1}${color1}Upload${alignr}${color2}${upspeedf wlan0}k/s (${totalup wlan0})
 ${else}
-${font2}${color3} ${font1}${color1}Not available without a network connection
+${font1}${color1}Not available without a network connection
+${endif}${color3}${hr 2}
+${font1}${color1}Speed test${color2}
+${if_gw}
+ ${texeci 300 speedtest --simple --secure}
+${else}
+${font1}${color1}Not available without a network connection
 ${endif}
-${color3}${hr}
 ]]
