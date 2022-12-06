@@ -1,0 +1,68 @@
+--[[
+    http://conky.sourceforge.net/docs.html
+    http://conky.sourceforge.net/variables.html
+    https://linuxconfig.org/ubuntu-20-04-system-monitoring-with-conky-widgets
+    https://github.com/brndnmtthws/conky/wiki
+    https://cairographics.org/manual/
+]]
+conky.config={
+    alignment='top_middle',
+    background=false,
+    --color1='1f3541',
+    --color2='5289b5',
+    --color3='afd8f2',
+    --color4='edf2f3',
+    color1='e9eaec',
+    color2='fad02c',
+    color3='333652',
+    color4='90adc6',
+    cpu_avg_samples=4,
+    default_color='FFFFFF',
+    default_outline_color='black',
+    default_shade_color='333333',
+    double_buffer=true,
+    draw_borders=false,
+    draw_graph_borders=false,
+    draw_outline=false,
+    draw_shades=false,
+    font1='Source Code Pro Semibold:style=Semibold:pixelsize=15',
+    font2='Font Awesome 5 Pro Solid:style=Solid:pixelsize=13',
+    gap_x=10,
+    gap_y=0,
+    --lua_load="$HOME/.config/conky/conky.lua",
+    --lua_draw_hook_post="conky_main",
+    maximum_width=400,
+    minimum_height=10,
+    minimum_width=300,
+    net_avg_samples=1,
+    no_buffers=true,
+    override_utf8_locale=true,
+    --own_window_argb_value=0,
+    --own_window_argb_visual=true,
+    --own_window_colour='000000',
+    own_window_hints='undecorated,below,sticky,skip_taskbar,skip_pager',
+    --own_window_transparent=true,
+    own_window_type='override',
+    own_window=true,
+    text_buffer_size=2048,
+    total_run_times=0,
+    update_interval=3,
+    uppercase=false,
+    use_xft=true,
+    xftalpha=.1,
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 150,
+    own_window_colour = 'black',
+}
+
+conky.text=[[
+${color3}${hr 2}
+${font1}${color1}Weather
+${if_gw}
+${color2}${execi 60 curl -H "Accept-Language: es" wttr.in/punta+arenas\?A\?0\?T\?Q}
+${else}
+${color3}${hr 2}
+${font1}${color1}Not available without a network connection
+${color3}${hr 2}${endif}
+]]
